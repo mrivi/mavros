@@ -11,6 +11,7 @@ add_message_files(
   ADSBVehicle.msg
   ActuatorControl.msg
   Altitude.msg
+  AnchorPoint.msg
   AttitudeTarget.msg
   BatteryStatus.msg
   CamIMUStamp.msg
@@ -27,6 +28,7 @@ add_message_files(
   HomePosition.msg
   ManualControl.msg
   Mavlink.msg
+  ObstacleAvoidance.msg
   OpticalFlowRad.msg
   OverrideRCIn.msg
   ParamValue.msg
