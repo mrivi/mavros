@@ -134,7 +134,8 @@ private:
         	UAS_FCU(m_uas)->send_message_ignore_drop(obstacle_avoidance);
 	}
 
-        float wrap_pi(float a) {
+        float wrap_pi(float a)
+        {
 
                 if (!std::isfinite(a)) {
                         return a;
