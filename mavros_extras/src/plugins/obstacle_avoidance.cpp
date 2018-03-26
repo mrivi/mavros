@@ -84,7 +84,7 @@ private:
         obstacle_avoidance.point_1[6] = req->point_1.acceleration_or_force.y;
         obstacle_avoidance.point_1[7] = req->point_1.acceleration_or_force.x;
         obstacle_avoidance.point_1[8] = -req->point_1.acceleration_or_force.z;
-        obstacle_avoidance.point_1[9] = wrap_pi(req->point_1.yaw + (M_PI / 2.0f));
+        obstacle_avoidance.point_1[9] = wrap_pi(-req->point_1.yaw + (M_PI / 2.0f));
         obstacle_avoidance.point_1[10] = req->point_1.yaw_rate;
 
         obstacle_avoidance.point_2[0] = req->point_2.position.y;
@@ -96,7 +96,7 @@ private:
         obstacle_avoidance.point_2[6] = req->point_2.acceleration_or_force.y;
         obstacle_avoidance.point_2[7] = req->point_2.acceleration_or_force.x;
         obstacle_avoidance.point_2[8] = -req->point_2.acceleration_or_force.z;
-        obstacle_avoidance.point_2[9] = wrap_pi(req->point_2.yaw + (M_PI / 2.0f));
+        obstacle_avoidance.point_2[9] = wrap_pi(-req->point_2.yaw + (M_PI / 2.0f));
         obstacle_avoidance.point_2[10] = req->point_2.yaw_rate;
 
         obstacle_avoidance.point_3[0] = req->point_3.position.y;
@@ -108,7 +108,7 @@ private:
         obstacle_avoidance.point_3[6] = req->point_3.acceleration_or_force.y;
         obstacle_avoidance.point_3[7] = req->point_3.acceleration_or_force.x;
         obstacle_avoidance.point_3[8] = -req->point_3.acceleration_or_force.z;
-        obstacle_avoidance.point_3[9] = wrap_pi(req->point_3.yaw + (M_PI / 2.0f));
+        obstacle_avoidance.point_3[9] = wrap_pi(-req->point_3.yaw + (M_PI / 2.0f));
         obstacle_avoidance.point_3[10] = req->point_3.yaw_rate;
 
         obstacle_avoidance.point_4[0] = req->point_4.position.y;
@@ -120,7 +120,7 @@ private:
         obstacle_avoidance.point_4[6] = req->point_4.acceleration_or_force.y;
         obstacle_avoidance.point_4[7] = req->point_4.acceleration_or_force.x;
         obstacle_avoidance.point_4[8] = -req->point_4.acceleration_or_force.z;
-        obstacle_avoidance.point_4[9] = wrap_pi(req->point_4.yaw + (M_PI / 2.0f));
+        obstacle_avoidance.point_4[9] = wrap_pi(-req->point_4.yaw + (M_PI / 2.0f));
         obstacle_avoidance.point_4[10] = req->point_4.yaw_rate;
 
         obstacle_avoidance.point_5[0] = req->point_5.position.y;
@@ -132,7 +132,7 @@ private:
         obstacle_avoidance.point_5[6] = req->point_5.acceleration_or_force.y;
         obstacle_avoidance.point_5[7] = req->point_5.acceleration_or_force.x;
         obstacle_avoidance.point_5[8] = -req->point_5.acceleration_or_force.z;
-        obstacle_avoidance.point_5[9] = wrap_pi(req->point_5.yaw + (M_PI / 2.0f));
+        obstacle_avoidance.point_5[9] = wrap_pi(-req->point_5.yaw + (M_PI / 2.0f));
         obstacle_avoidance.point_5[10] = req->point_5.yaw_rate;
 
         std::copy(req->point_valid.begin(), req->point_valid.end(), obstacle_avoidance.point_valid.begin());
@@ -173,7 +173,7 @@ private:
         obstacle_avoidance_input->point_1.acceleration_or_force.x = avoid_input.point_1[7];
         obstacle_avoidance_input->point_1.acceleration_or_force.y = avoid_input.point_1[6];
         obstacle_avoidance_input->point_1.acceleration_or_force.z = -avoid_input.point_1[8];
-        obstacle_avoidance_input->point_1.yaw = wrap_pi(avoid_input.point_1[9] - (M_PI / 2.0f));
+        obstacle_avoidance_input->point_1.yaw = wrap_pi((M_PI / 2.0f) - avoid_input.point_1[9]);
         obstacle_avoidance_input->point_1.yaw_rate = avoid_input.point_1[10];
 
         obstacle_avoidance_input->point_2.position.x = avoid_input.point_2[1];
@@ -185,7 +185,7 @@ private:
         obstacle_avoidance_input->point_2.acceleration_or_force.x = avoid_input.point_2[7];
         obstacle_avoidance_input->point_2.acceleration_or_force.y = avoid_input.point_2[6];
         obstacle_avoidance_input->point_2.acceleration_or_force.z = -avoid_input.point_2[8];
-        obstacle_avoidance_input->point_2.yaw = wrap_pi(avoid_input.point_2[9] - (M_PI / 2.0f));
+        obstacle_avoidance_input->point_2.yaw = wrap_pi((M_PI / 2.0f) - avoid_input.point_2[9]);
         obstacle_avoidance_input->point_2.yaw_rate = avoid_input.point_2[10];
 
         obstacle_avoidance_input->point_3.position.x = avoid_input.point_3[1];
@@ -197,7 +197,7 @@ private:
         obstacle_avoidance_input->point_3.acceleration_or_force.x = avoid_input.point_3[7];
         obstacle_avoidance_input->point_3.acceleration_or_force.y = avoid_input.point_3[6];
         obstacle_avoidance_input->point_3.acceleration_or_force.z = -avoid_input.point_3[8];
-        obstacle_avoidance_input->point_3.yaw = wrap_pi(avoid_input.point_3[9] - (M_PI / 2.0f));
+        obstacle_avoidance_input->point_3.yaw = wrap_pi((M_PI / 2.0f) - avoid_input.point_3[9]);
         obstacle_avoidance_input->point_3.yaw_rate = avoid_input.point_3[10];
 
         obstacle_avoidance_input->point_4.position.x = avoid_input.point_4[1];
@@ -209,7 +209,7 @@ private:
         obstacle_avoidance_input->point_4.acceleration_or_force.x = avoid_input.point_4[7];
         obstacle_avoidance_input->point_4.acceleration_or_force.y = avoid_input.point_4[6];
         obstacle_avoidance_input->point_4.acceleration_or_force.z = -avoid_input.point_4[8];
-        obstacle_avoidance_input->point_4.yaw = wrap_pi(avoid_input.point_4[9] - (M_PI / 2.0f));
+        obstacle_avoidance_input->point_4.yaw = wrap_pi((M_PI / 2.0f) - avoid_input.point_4[9]);
         obstacle_avoidance_input->point_4.yaw_rate = avoid_input.point_4[10];
 
         obstacle_avoidance_input->point_5.position.x = avoid_input.point_5[1];
@@ -221,7 +221,7 @@ private:
         obstacle_avoidance_input->point_5.acceleration_or_force.x = avoid_input.point_5[7];
         obstacle_avoidance_input->point_5.acceleration_or_force.y = avoid_input.point_5[6];
         obstacle_avoidance_input->point_5.acceleration_or_force.z = -avoid_input.point_5[8];
-        obstacle_avoidance_input->point_5.yaw = wrap_pi(avoid_input.point_5[9] - (M_PI / 2.0f));
+        obstacle_avoidance_input->point_5.yaw = wrap_pi((M_PI / 2.0f) - avoid_input.point_5[9]);
         obstacle_avoidance_input->point_5.yaw_rate = avoid_input.point_5[10];
 
         std::copy(avoid_input.point_valid.begin(), avoid_input.point_valid.end(), obstacle_avoidance_input->point_valid.begin());
