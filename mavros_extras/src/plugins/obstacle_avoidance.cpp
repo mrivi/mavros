@@ -1,7 +1,7 @@
 /**
  * @brief Obstacle avoidance plugin
  * @file obstacle_avoidance.cpp
- * @author Nuno Marques <martina@rivizzigno.com>
+ * @author Martina Rivizzigno <martina@rivizzigno.com>
  *
  * @addtogroup plugin
  * @{
@@ -18,9 +18,6 @@
 #include <mavros_msgs/ObstacleAvoidance.h>
 #include <mavros_msgs/PositionTarget.h>
 
-
-// TODO: create ros message to send obstacle distanc
-
 namespace mavros {
 namespace extra_plugins {
 
@@ -28,24 +25,24 @@ namespace extra_plugins {
 using mavlink::common::MAV_TRAJECTORY_REPRESENTATION;
 
 /**
- * @brief Obstacle avoidance plugin to send collision
- * free path to the FCU
+ * @brief Obstacle avoidance plugin to receive planned path from the FCU and
+ * send back to the FCU a collision free path
  * 
- * @see obstacle_cb()
+ * @see avoidance_cb()
  */
 class ObstacleAvoidancePlugin : public plugin::PluginBase {
 public:
 	ObstacleAvoidancePlugin() : PluginBase(),
-		obstacle_nh("~obstacle")
+        avoidance_nh("~avoidance")
 	{ }
 
 	void initialize(UAS &uas_)
 	{
-		PluginBase::initialize(uas_);
+        PluginBase::initialize(uas_);
 
-		obstacle_sub = obstacle_nh.subscribe("anchor_point", 10, &ObstacleAvoidancePlugin::obstacle_cb, this);
+        avoidance_outout_sub = avoidance_nh.subscribe("output", 10, &ObstacleAvoidancePlugin::avoidance_cb, this);
 
-        avoidance_input_pub = obstacle_nh.advertise<mavros_msgs::ObstacleAvoidance>("input_pose", 10);
+        avoidance_input_pub = avoidance_nh.advertise<mavros_msgs::ObstacleAvoidance>("input", 10);
 	}
 
 	Subscriptions get_subscriptions()
@@ -56,8 +53,9 @@ public:
 	}
 
 private:
-	ros::NodeHandle obstacle_nh;
-	ros::Subscriber obstacle_sub;
+	ros::NodeHandle avoidance_nh;
+
+	ros::Subscriber avoidance_outout_sub;
 
     ros::Publisher avoidance_input_pub;
 
@@ -68,7 +66,7 @@ private:
 	 * Message specification: http://mavlink.org/messages/common#OBSTACLE_AVOIDANCE
 	 * @param req	received ObstacleAvoidance msg
 	 */
-	void obstacle_cb(const mavros_msgs::ObstacleAvoidance::ConstPtr &req)
+	void avoidance_cb(const mavros_msgs::ObstacleAvoidance::ConstPtr &req)
 	{
         mavlink::common::msg::OBSTACLE_AVOIDANCE obstacle_avoidance {};
         obstacle_avoidance.time_usec = req->header.stamp.toNSec() / 1000;//!< [milisecs]
@@ -163,7 +161,9 @@ private:
     {
         auto obstacle_avoidance_input = boost::make_shared<mavros_msgs::ObstacleAvoidance>();
         obstacle_avoidance_input->header = m_uas->synchronized_header("local_origin", avoid_input.time_usec);
+        obstacle_avoidance_input->type = avoid_input.type;        //!< trajectory type (waypoints, bezier)
 
+        /* Conversion between NED and ENU */
         obstacle_avoidance_input->point_1.position.x = avoid_input.point_1[1];
         obstacle_avoidance_input->point_1.position.y = avoid_input.point_1[0];
         obstacle_avoidance_input->point_1.position.z = -avoid_input.point_1[2];
